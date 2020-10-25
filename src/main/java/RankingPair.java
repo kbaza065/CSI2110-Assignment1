@@ -20,11 +20,6 @@ public class RankingPair {
 
     }
 
-    public RankingPair(int employerRanking, int studentRanking) {
-        this.employerRanking = employerRanking;
-        this.studentRanking = studentRanking;
-    }
-
     public int getEmployerRanking() {
         return employerRanking;
     }
