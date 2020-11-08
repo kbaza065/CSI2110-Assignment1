@@ -281,4 +281,56 @@ public class GaleShapley {
 
     }
 
+    /**
+     * Checks if a given set of matches is stable.
+     *
+     * A stable match is defined such that neither party to the match has a
+     * preferred party that also prefers them over their current match.
+     *
+     * @param students The students' current matches
+     *                 (if student s is matched to employer e, then students[s] = e)
+     * @param employers The employers' current matches
+     *                 (if employer e is matched to student s, then employers[e] = s)
+     * @param A The ranking score given by student s to employer e
+     * @param B The ranking score given by employer e to student s
+     * @return True if the set of matches is stable, otherwise false
+     */
+    public boolean isStableMatch(int[] students, int[] employers, int[][] A, int[][] B) {
+
+        int e, s, n;
+        n = students.length;
+
+        for (int i=0; i < n; i++) {
+
+            // Looking at Employer i
+            e = i;
+            // Get Employer e's current match
+            s = employers[e];
+
+            // Check match stability only if current match != most preferred match
+            if (B[e][s] > 1) {
+                for (int j = 0; j < n; j++) {
+                    // Make sure Employer e does not prefer Student s over Student j
+                    // and Student s is not Student j
+                    if ((B[e][j] < B[e][s]) && (j != s)) {
+                        // Get Student j's current match
+                        int e_current = students[j];
+                        // Check if Student j prefers Employer e over Employer e_current
+                        if (A[j][e] < A[j][e_current]) {
+                            // Employer e prefers Student j over current match s
+                            // Student j prefers Employer e over current match e_current
+                            // The match is not stable, thus the set of matches is not stable
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        // All the match pairs are stable
+        // Thus the solution IS stable
+        return true;
+
+    }
+
 }
